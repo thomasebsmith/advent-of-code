@@ -1,7 +1,7 @@
-use std::fs::File;
 use std::io;
 use std::io::BufRead;
 
+use crate::errors::invalid_input;
 use crate::part::Part;
 
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -103,32 +103,32 @@ fn score(action: Action, outcome: Outcome) -> u64 {
     action.score() + outcome.score()
 }
 
-pub fn run(part: Part, input_file: &str) -> io::Result<()> {
-    let file = File::open(input_file)?;
-    let reader = io::BufReader::new(file);
-
+pub fn run<R: io::Read>(
+    part: Part,
+    reader: io::BufReader<R>,
+) -> io::Result<()> {
     let mut cur_score: u64 = 0;
     for line in reader.lines() {
         let line = line?;
         let words = line.split(' ').collect::<Vec<&str>>();
         if words.len() != 2 {
-            Err(io::Error::new(io::ErrorKind::Other, "Invalid words"))?
+            Err(invalid_input("Invalid words (too short)"))?
         }
 
         let opponent = Action::from_opponent_str(words[0]).ok_or_else(|| {
-            io::Error::new(io::ErrorKind::Other, "Invalid opponent action")
+            invalid_input("Invalid opponent action")
         })?;
 
         match part {
             Part::Part1 => {
                 let you = Action::from_your_str(words[1]).ok_or_else(|| {
-                    io::Error::new(io::ErrorKind::Other, "Invalid action")
+                    invalid_input("Invalid action")
                 })?;
                 cur_score += score(you, Outcome::from_match(you, opponent));
             },
             Part::Part2 => {
                 let outcome = Outcome::from_str(words[1]).ok_or_else(|| {
-                    io::Error::new(io::ErrorKind::Other, "Invalid outcome")
+                    invalid_input("Invalid outcome")
                 })?;
                 cur_score += score(
                     opponent.counter_to_get_outcome(outcome),

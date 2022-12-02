@@ -1,14 +1,13 @@
 use std::collections::BTreeSet;
-use std::fs::File;
 use std::io;
 use std::io::BufRead;
 
 use crate::part::Part;
 
-pub fn run(part: Part, input_file: &str) -> io::Result<()> {
-    let file = File::open(input_file)?;
-    let reader = io::BufReader::new(file);
-
+pub fn run<R: io::Read>(
+    part: Part,
+    reader: io::BufReader<R>,
+) -> io::Result<()> {
     let num_top_elves: usize = match part {
         Part::Part1 => 1,
         Part::Part2 => 3,

@@ -3,13 +3,19 @@ mod day2;
 
 use std::io;
 
+use crate::errors::invalid_input;
 use crate::part::Part;
 
-pub fn run(day: u8, part: Part, input_file: &str) -> io::Result<()> {
+pub fn run<R: io::Read>(
+    day: u8,
+    part: Part,
+    reader: io::BufReader<R>,
+) -> io::Result<()> {
     let run_func = match day {
         1 => day1::run,
         2 => day2::run,
-        _ => Err(io::Error::new(io::ErrorKind::Other, "Invalid day"))?,
+        _ => Err(invalid_input("Invalid day"))?,
     };
-    run_func(part, input_file)
+
+    run_func(part, reader)
 }
