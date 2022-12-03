@@ -1,6 +1,8 @@
+#![feature(iter_array_chunks)]
 #![feature(map_first_last)]
 
 mod errors;
+mod iter;
 mod part;
 mod year2022;
 
