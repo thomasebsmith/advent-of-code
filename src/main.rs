@@ -1,3 +1,4 @@
+#![feature(array_try_from_fn)]
 #![feature(iter_array_chunks)]
 #![feature(map_first_last)]
 
