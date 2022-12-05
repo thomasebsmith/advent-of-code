@@ -76,7 +76,8 @@ impl Outcome {
             Self::Draw
         } else if you.dominator() == opponent {
             Self::Lose
-        } else { // you.loser() == opponent
+        } else {
+            // you.loser() == opponent
             Self::Win
         }
     }
@@ -115,26 +116,21 @@ pub fn run<R: io::Read>(
             Err(invalid_input("Invalid words (too short)"))?
         }
 
-        let opponent = Action::from_opponent_str(words[0]).ok_or_else(|| {
-            invalid_input("Invalid opponent action")
-        })?;
+        let opponent = Action::from_opponent_str(words[0])
+            .ok_or_else(|| invalid_input("Invalid opponent action"))?;
 
         match part {
             Part::Part1 => {
-                let you = Action::from_your_str(words[1]).ok_or_else(|| {
-                    invalid_input("Invalid action")
-                })?;
+                let you = Action::from_your_str(words[1])
+                    .ok_or_else(|| invalid_input("Invalid action"))?;
                 cur_score += score(you, Outcome::from_match(you, opponent));
-            },
+            }
             Part::Part2 => {
-                let outcome = Outcome::from_str(words[1]).ok_or_else(|| {
-                    invalid_input("Invalid outcome")
-                })?;
-                cur_score += score(
-                    opponent.counter_to_get_outcome(outcome),
-                    outcome,
-                );
-            },
+                let outcome = Outcome::from_str(words[1])
+                    .ok_or_else(|| invalid_input("Invalid outcome"))?;
+                cur_score +=
+                    score(opponent.counter_to_get_outcome(outcome), outcome);
+            }
         }
     }
     println!("{}", cur_score);

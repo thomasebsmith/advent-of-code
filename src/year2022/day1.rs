@@ -24,9 +24,9 @@ pub fn run<R: io::Read>(
             }
             this_elfs_calories = 0;
         } else {
-            this_elfs_calories += line.parse::<u64>().map_err(|err| {
-                io::Error::new(io::ErrorKind::Other, err)
-            })?;
+            this_elfs_calories += line
+                .parse::<u64>()
+                .map_err(|err| io::Error::new(io::ErrorKind::Other, err))?;
         }
     }
 

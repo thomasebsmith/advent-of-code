@@ -55,6 +55,6 @@ fn main() -> ExitCode {
         Err(error) => {
             eprintln!("{}", error);
             ExitCode::FAILURE
-        },
+        }
     }
 }

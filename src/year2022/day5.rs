@@ -90,7 +90,8 @@ impl Stacks {
             let stack_from = &mut part_from[0];
             let stack_to = &mut part_to[to_idx];
             (stack_from, stack_to)
-        } else { // to_idx > from_idx
+        } else {
+            // to_idx > from_idx
             let (part_from, part_to) = self.stacks.split_at_mut(to_idx);
             (&mut part_from[from_idx], &mut part_to[0])
         };
@@ -104,7 +105,7 @@ impl Stacks {
 
     pub fn apply_one_by_one(&mut self, movement: Movement) -> io::Result<()> {
         let (stack_from, stack_to) = self.get_stacks(movement)?;
-        
+
         for _i in 0..movement.count {
             stack_to.push(stack_from.pop().unwrap());
         }
@@ -115,18 +116,19 @@ impl Stacks {
     pub fn apply_at_once(&mut self, movement: Movement) -> io::Result<()> {
         let (stack_from, stack_to) = self.get_stacks(movement)?;
 
-        let mut to_move = stack_from.split_off(
-            stack_from.len() - movement.count
-        );
+        let mut to_move =
+            stack_from.split_off(stack_from.len() - movement.count);
         stack_to.append(&mut to_move);
 
         Ok(())
     }
 
     fn print_tops(&self) {
-        let summary = self.stacks.iter().map(
-            |stack| stack.last().map(|ch| *ch).unwrap_or(' ')
-        ).collect::<String>();
+        let summary = self
+            .stacks
+            .iter()
+            .map(|stack| stack.last().map(|ch| *ch).unwrap_or(' '))
+            .collect::<String>();
 
         println!("{}", summary);
     }
@@ -148,9 +150,10 @@ pub fn run<R: io::Read>(
             // If at the end of the drawing, parse it.
             is_stack_line = false;
 
-            let drawing_lines = stack_lines.split_last().ok_or_else(
-                || invalid_input("Starting blank line")
-            )?.1;
+            let drawing_lines = stack_lines
+                .split_last()
+                .ok_or_else(|| invalid_input("Starting blank line"))?
+                .1;
 
             stacks = Some(Stacks::new(drawing_lines)?);
             continue;
@@ -162,9 +165,11 @@ pub fn run<R: io::Read>(
         } else {
             // move _ from _ to _
             let words = line.split(' ');
-            let numbers: Result<Vec<_>, _> = words.skip(1).step_by(2).map(
-                |word| word.parse::<usize>().map_err(invalid_input)
-            ).collect();
+            let numbers: Result<Vec<_>, _> = words
+                .skip(1)
+                .step_by(2)
+                .map(|word| word.parse::<usize>().map_err(invalid_input))
+                .collect();
 
             let numbers = numbers?;
             if numbers.len() != 3 {

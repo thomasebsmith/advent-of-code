@@ -31,9 +31,8 @@ fn rucksack(string: &str) -> io::Result<HashSet<Item>> {
     let mut items = HashSet::<Item>::new();
     for ch in string.chars() {
         items.insert(
-            Item::new(ch).ok_or(
-                invalid_input("invalid character - not a letter")
-            )?
+            Item::new(ch)
+                .ok_or(invalid_input("invalid character - not a letter"))?,
         );
     }
     Ok(items)
