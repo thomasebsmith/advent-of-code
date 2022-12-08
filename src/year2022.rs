@@ -4,6 +4,7 @@ mod day3;
 mod day4;
 mod day5;
 mod day6;
+mod day7;
 
 use std::io;
 
@@ -22,6 +23,7 @@ pub fn run<R: io::Read>(
         4 => day4::run,
         5 => day5::run,
         6 => day6::run,
+        7 => day7::run,
         _ => Err(invalid_input("Invalid day"))?,
     };
 
