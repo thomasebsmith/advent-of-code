@@ -1,5 +1,6 @@
 #![feature(array_try_from_fn)]
 #![feature(iter_array_chunks)]
+#![feature(iterator_try_collect)]
 #![feature(map_first_last)]
 
 mod errors;
