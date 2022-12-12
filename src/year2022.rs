@@ -1,6 +1,7 @@
 mod day1;
 mod day10;
 mod day11;
+mod day12;
 mod day2;
 mod day3;
 mod day4;
@@ -32,6 +33,7 @@ pub fn run<R: io::Read>(
         9 => day9::run,
         10 => day10::run,
         11 => day11::run,
+        12 => day12::run,
         _ => Err(invalid_input("Invalid day"))?,
     };
 
