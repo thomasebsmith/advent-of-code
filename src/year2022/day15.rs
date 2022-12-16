@@ -77,10 +77,13 @@ impl Sensor {
         })
     }
 
-    pub fn no_distress_beacon_segment(&self, row_y: i64) -> Option<HorizontalSegment> {
-        let max_distance = self.location.manhattan_distance(
-            self.closest_beacon_location,
-        );
+    pub fn no_distress_beacon_segment(
+        &self,
+        row_y: i64,
+    ) -> Option<HorizontalSegment> {
+        let max_distance = self
+            .location
+            .manhattan_distance(self.closest_beacon_location);
 
         let distance_to_row = (self.location.y - row_y).abs();
 
@@ -118,7 +121,10 @@ impl FromStr for Sensor {
             .ok_or_else(|| invalid_input("Expected \"closest beacon is at \""))?
             .parse::<Vector2D>()?;
 
-        Ok(Self { location, closest_beacon_location })
+        Ok(Self {
+            location,
+            closest_beacon_location,
+        })
     }
 }
 
@@ -164,17 +170,25 @@ impl LineSegments {
             // We have stuff to remove
             let first_segment = if segment.x < to_remove.x {
                 let leftover_beginning_len = to_remove.x - segment.x;
-                Some(HorizontalSegment { x: segment.x, len: leftover_beginning_len })
+                Some(HorizontalSegment {
+                    x: segment.x,
+                    len: leftover_beginning_len,
+                })
             } else {
                 None
             };
 
-            let second_segment = if to_remove.x + to_remove.len < segment.x + segment.len {
-                let leftover_end_len = segment.x + segment.len - (to_remove.x + to_remove.len);
-                Some(HorizontalSegment { x: to_remove.x + to_remove.len, len: leftover_end_len })
-            } else {
-                None
-            };
+            let second_segment =
+                if to_remove.x + to_remove.len < segment.x + segment.len {
+                    let leftover_end_len =
+                        segment.x + segment.len - (to_remove.x + to_remove.len);
+                    Some(HorizontalSegment {
+                        x: to_remove.x + to_remove.len,
+                        len: leftover_end_len,
+                    })
+                } else {
+                    None
+                };
 
             cursor.remove_current(); // Also moves cursor to next node
 
@@ -193,7 +207,10 @@ fn part_1(sensors: Vec<Sensor>) -> io::Result<()> {
     const ROW_X: i64 = -5_000_000;
     const ROW_LEN: i64 = 10_000_000;
 
-    let mut possible_beacons_in_row = LineSegments::new(HorizontalSegment { x: ROW_X, len: ROW_LEN });
+    let mut possible_beacons_in_row = LineSegments::new(HorizontalSegment {
+        x: ROW_X,
+        len: ROW_LEN,
+    });
 
     for sensor in sensors {
         if let Some(segment) = sensor.no_beacon_segment(ROW_Y) {
@@ -214,7 +231,11 @@ fn part_2(sensors: Vec<Sensor>) -> io::Result<()> {
     const MAX_Y: i64 = 4_000_001;
 
     for row_y in MIN_Y..=MAX_Y {
-        let mut possible_beacons_in_row = LineSegments::new(HorizontalSegment { x: MIN_X, len: MAX_X - MIN_X });
+        let mut possible_beacons_in_row =
+            LineSegments::new(HorizontalSegment {
+                x: MIN_X,
+                len: MAX_X - MIN_X,
+            });
 
         for sensor in &sensors {
             if let Some(segment) = sensor.no_distress_beacon_segment(row_y) {
@@ -237,8 +258,6 @@ fn part_2(sensors: Vec<Sensor>) -> io::Result<()> {
 
     Ok(())
 }
-
-
 
 pub fn run<R: io::Read>(
     part: Part,
