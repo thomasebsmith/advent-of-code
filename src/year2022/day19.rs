@@ -106,7 +106,7 @@ impl StateManager {
     // Call this right after ticking a minute
     fn max_geodes_upper_bound(
         &self,
-        blueprint: &Blueprint,
+        _blueprint: &Blueprint,
         state: &State,
     ) -> usize {
         if state.minutes_remaining == 0 {
