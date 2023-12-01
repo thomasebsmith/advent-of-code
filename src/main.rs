@@ -7,6 +7,7 @@ mod errors;
 mod iter;
 mod part;
 mod year2022;
+mod year2023;
 
 use std::env;
 use std::error::Error;
@@ -41,6 +42,7 @@ fn parse_args_and_run() -> Result<(), Box<dyn Error>> {
 
     let run_function = match year {
         2022 => year2022::run,
+        2023 => year2023::run,
         _ => Err(invalid_input("Invalid year"))?,
     };
 
