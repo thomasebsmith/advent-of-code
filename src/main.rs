@@ -2,7 +2,6 @@
 #![feature(iter_array_chunks)]
 #![feature(iterator_try_collect)]
 #![feature(linked_list_cursors)]
-#![feature(map_first_last)]
 
 mod errors;
 mod iter;
