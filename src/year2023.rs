@@ -1,4 +1,5 @@
 mod day01;
+mod day02;
 
 use std::io;
 
@@ -12,6 +13,7 @@ pub fn run<R: io::Read>(
 ) -> io::Result<()> {
     let run_func = match day {
         1 => day01::run,
+        2 => day02::run,
         _ => Err(invalid_input("Invalid day"))?,
     };
 
