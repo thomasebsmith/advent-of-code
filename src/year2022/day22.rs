@@ -97,6 +97,7 @@ impl Map {
         }
     }
 
+    #[allow(dead_code)]
     pub fn print(&self) {
         for (row_num, row) in self.tiles.iter().enumerate() {
             for (col_num, tile) in row.iter().enumerate() {
@@ -391,7 +392,7 @@ impl Map {
 }
 
 pub fn run<R: io::Read>(
-    part: Part,
+    _part: Part,
     reader: io::BufReader<R>,
 ) -> io::Result<()> {
     let mut map = Map::new();

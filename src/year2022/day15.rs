@@ -38,7 +38,8 @@ impl FromStr for Vector2D {
     type Err = io::Error;
 
     fn from_str(string: &str) -> io::Result<Self> {
-        let [x_text, y_text] = &string.split(", ").collect::<Vec<_>>()[..] else {
+        let [x_text, y_text] = &string.split(", ").collect::<Vec<_>>()[..]
+        else {
             Err(invalid_input("Could not split by \", \" into 2 components"))?
         };
 
@@ -104,10 +105,9 @@ impl FromStr for Sensor {
     type Err = io::Error;
 
     fn from_str(string: &str) -> io::Result<Self> {
-        let [
-            sensor_location_text,
-            beacon_location_text,
-        ] = &string.split(": ").collect::<Vec<_>>()[..] else {
+        let [sensor_location_text, beacon_location_text] =
+            &string.split(": ").collect::<Vec<_>>()[..]
+        else {
             Err(invalid_input("Could not split by \": \" into 2 components"))?
         };
 

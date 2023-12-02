@@ -302,11 +302,15 @@ pub fn run<R: io::Read>(
 
     for (i, line) in reader.lines().enumerate() {
         let line = line?;
-        let [blueprint_name, recipes] = &line.split(": ").collect::<Vec<_>>()[..] else {
+        let [blueprint_name, recipes] =
+            &line.split(": ").collect::<Vec<_>>()[..]
+        else {
             Err(invalid_input("Expected colon"))?
         };
 
-        let Some(blueprint_number_text) = blueprint_name.split(' ').skip(1).next() else {
+        let Some(blueprint_number_text) =
+            blueprint_name.split(' ').skip(1).next()
+        else {
             Err(invalid_input("Expected space in blueprint name"))?
         };
 
@@ -314,7 +318,12 @@ pub fn run<R: io::Read>(
             .parse::<usize>()
             .map_err(invalid_input)?;
 
-        let [ore_text, clay_text, obsidian_text, geode_text] = &recipes.strip_suffix('.').ok_or_else(|| invalid_input("Expected ending ."))?.split(". ").collect::<Vec<_>>()[..] else {
+        let [ore_text, clay_text, obsidian_text, geode_text] = &recipes
+            .strip_suffix('.')
+            .ok_or_else(|| invalid_input("Expected ending ."))?
+            .split(". ")
+            .collect::<Vec<_>>()[..]
+        else {
             Err(invalid_input("Expected recipes"))?
         };
 

@@ -19,9 +19,9 @@ impl FromStr for Vec3D {
     fn from_str(string: &str) -> io::Result<Self> {
         let &[x, y, z] = &string
             .split(',')
-            .map(|string| string.parse::<i64>()
-            .map_err(invalid_input))
-            .collect::<io::Result<Vec<_>>>()?[..] else {
+            .map(|string| string.parse::<i64>().map_err(invalid_input))
+            .collect::<io::Result<Vec<_>>>()?[..]
+        else {
             Err(invalid_input("Expected x,y,z"))?
         };
         Ok(Self { x, y, z })

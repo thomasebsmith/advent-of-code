@@ -83,7 +83,10 @@ impl Directory {
             return Ok(self);
         };
         let Some(child) = self.children.get_mut(child_name) else {
-            return Err(invalid_input(format!("No child with name {} found", child_name)));
+            return Err(invalid_input(format!(
+                "No child with name {} found",
+                child_name
+            )));
         };
         match child {
             FSItem::File(_) => Err(invalid_input("Cannot navigate to file")),

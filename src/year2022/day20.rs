@@ -53,7 +53,7 @@ pub fn run<R: io::Read>(
             // TODO: This is slow...
             let mut cursor = find(&mut numbers, |(j, _)| i == *j);
 
-            let Some(&mut(_, mut value)) = cursor.current() else {
+            let Some(&mut (_, mut value)) = cursor.current() else {
                 panic!("Invalid state: could not find element");
             };
 

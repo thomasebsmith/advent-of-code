@@ -196,7 +196,8 @@ pub fn run<R: io::Read>(
     for line in reader.lines() {
         let line = line?;
 
-        let &[name, operation_str] = &line.split(": ").collect::<Vec<_>>()[..] else {
+        let &[name, operation_str] = &line.split(": ").collect::<Vec<_>>()[..]
+        else {
             Err(invalid_input("Expected \": \" separator"))?
         };
 

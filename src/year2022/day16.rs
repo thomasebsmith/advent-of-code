@@ -355,11 +355,15 @@ pub fn run<R: io::Read>(
     for line in reader.lines() {
         let line = line?;
 
-        let [valve_text, tunnels_text] = &line.split("; ").collect::<Vec<_>>()[..] else {
+        let [valve_text, tunnels_text] =
+            &line.split("; ").collect::<Vec<_>>()[..]
+        else {
             Err(invalid_input("Expected \"; \""))?
         };
 
-        let [name_text, flow_rate_text] = &valve_text.split(" has flow rate=").collect::<Vec<_>>()[..] else {
+        let [name_text, flow_rate_text] =
+            &valve_text.split(" has flow rate=").collect::<Vec<_>>()[..]
+        else {
             Err(invalid_input("Expected \" has flow rate=\""))?
         };
 
