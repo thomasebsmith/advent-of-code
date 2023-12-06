@@ -120,3 +120,21 @@ where
         split_predicate,
     }
 }
+
+pub fn join<I>(iterator: I, joiner: &str) -> String
+where
+    I: Iterator,
+    I::Item: AsRef<str>,
+{
+    let mut result = String::new();
+    let mut is_first = true;
+    for item in iterator {
+        if !is_first {
+            result += joiner;
+        }
+        is_first = false;
+        result += item.as_ref();
+    }
+
+    result
+}
