@@ -4,7 +4,7 @@ use std::io;
 use std::ops::Range;
 
 use crate::errors::invalid_input;
-use crate::parse::{lines, paragraphs};
+use crate::parse::{lines, paragraphs, parse_words};
 use crate::part::Part;
 
 #[derive(PartialEq, Eq, PartialOrd, Ord)]
@@ -27,10 +27,8 @@ fn intersect<T: Ord>(r1: Range<T>, r2: Range<T>) -> Range<T> {
 
 impl MappingRange {
     fn from_line(line: &str) -> io::Result<Self> {
-        let [destination_start, source_start, length] = line
-            .split_whitespace()
-            .map(|s| s.parse::<i64>().map_err(invalid_input))
-            .collect::<io::Result<Vec<_>>>()?[..]
+        let [destination_start, source_start, length] =
+            parse_words::<i64>(line)?[..]
         else {
             return Err(invalid_input("Expected 3 numbers"));
         };
@@ -121,12 +119,11 @@ impl Input {
                     ));
                 }
 
-                seeds = paragraph[0]
-                    .strip_prefix("seeds: ")
-                    .ok_or_else(|| invalid_input("No seeds: "))?
-                    .split_whitespace()
-                    .map(|s| s.parse::<i64>().map_err(invalid_input))
-                    .collect::<io::Result<_>>()?;
+                seeds = parse_words::<i64>(
+                    paragraph[0]
+                        .strip_prefix("seeds: ")
+                        .ok_or_else(|| invalid_input("No seeds: "))?,
+                )?;
                 if seeds.is_empty() {
                     return Err(invalid_input("Expected at least one seed"));
                 }
