@@ -1,10 +1,10 @@
 use std::cmp::{max, min};
 use std::collections::{BTreeSet, HashSet};
 use std::io;
-use std::io::BufRead;
 use std::ops::Range;
 
 use crate::errors::invalid_input;
+use crate::parse::{lines, paragraphs};
 use crate::part::Part;
 
 #[derive(PartialEq, Eq, PartialOrd, Ord)]
@@ -81,10 +81,6 @@ impl Mapping {
         self.ranges.insert(range);
     }
 
-    fn is_empty(&self) -> bool {
-        self.ranges.is_empty()
-    }
-
     fn apply(&self, source: Range<i64>) -> HashSet<Range<i64>> {
         let mut remaining = source.clone(); // TODO
         let mut result = HashSet::<Range<i64>>::new();
@@ -116,13 +112,16 @@ impl Input {
     fn from_reader<R: io::Read>(reader: io::BufReader<R>) -> io::Result<Self> {
         let mut seeds = Vec::<i64>::new();
         let mut mappings = Vec::<Mapping>::new();
-        let mut current_mapping = Mapping::new();
 
-        for line in reader.lines() {
-            let line = line?;
-
+        for paragraph in paragraphs(lines(reader)?) {
             if seeds.is_empty() {
-                seeds = line
+                if paragraph.len() != 1 {
+                    return Err(invalid_input(
+                        "Expected 1 line in first paragraph",
+                    ));
+                }
+
+                seeds = paragraph[0]
                     .strip_prefix("seeds: ")
                     .ok_or_else(|| invalid_input("No seeds: "))?
                     .split_whitespace()
@@ -134,22 +133,13 @@ impl Input {
                 continue;
             }
 
-            if line == "" {
-                if !current_mapping.is_empty() {
-                    mappings.push(current_mapping);
-                    current_mapping = Mapping::new();
+            let mut current_mapping = Mapping::new();
+            for line in paragraph {
+                if line.ends_with(":") {
+                    continue;
                 }
-                continue;
+                current_mapping.add_range(MappingRange::from_line(&line)?);
             }
-
-            if line.ends_with(":") {
-                continue;
-            }
-
-            current_mapping.add_range(MappingRange::from_line(&line)?);
-        }
-
-        if !current_mapping.is_empty() {
             mappings.push(current_mapping);
         }
 

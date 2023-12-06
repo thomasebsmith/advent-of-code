@@ -82,3 +82,41 @@ where
         }
     }
 }
+
+pub struct SplitBy<I: Iterator, P> {
+    iter: I,
+    split_predicate: P,
+}
+
+impl<I: Iterator, P: FnMut(&I::Item) -> bool> Iterator for SplitBy<I, P> {
+    type Item = Vec<I::Item>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let mut result = Self::Item::new();
+        let mut items_exist = false;
+        while let Some(item) = self.iter.next() {
+            items_exist = true;
+            if (self.split_predicate)(&item) {
+                break;
+            }
+            result.push(item);
+        }
+
+        if items_exist {
+            Some(result)
+        } else {
+            None
+        }
+    }
+}
+
+pub fn split_by<I, P>(iter: I, split_predicate: P) -> SplitBy<I, P>
+where
+    I: Iterator,
+    P: FnMut(&I::Item) -> bool,
+{
+    SplitBy {
+        iter,
+        split_predicate,
+    }
+}

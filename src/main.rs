@@ -5,6 +5,7 @@
 
 mod errors;
 mod iter;
+mod parse;
 mod part;
 mod year2022;
 mod year2023;
