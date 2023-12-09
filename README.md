@@ -2,7 +2,7 @@
 This repository contains Thomas Smith's solutions to
 [Advent of Code](https://adventofcode.com/).
 
-Solutions are currently only available for 2022 and 2023.
+Solutions are available for 2022 and 2023.
 
 ## Copyright
 All solutions are copyright © 2022-2023 Thomas Smith.
