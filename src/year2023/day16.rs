@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::io;
 
 use crate::errors::invalid_input;
