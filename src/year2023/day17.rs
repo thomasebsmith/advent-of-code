@@ -284,8 +284,8 @@ impl CityBlocks {
             heat_loss_so_far: 0,
         });
 
-        // This is pretty slow. It could probably be optimized by pruning duplicate position +
-        // direction + bmbe combos.
+        // This is pretty slow. It could probably be optimized by pruning
+        // duplicate position + direction + bmbe combos.
         while let Some(place) = places.pop_front() {
             let hlsf_ref = state.map[place.position.row][place.position.col]
                 .min_heat_loss(

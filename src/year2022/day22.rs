@@ -480,7 +480,8 @@ pub fn run<R: io::Read>(
         //map.print();
         map.perform(instruction);
         //std::thread::sleep(std::time::Duration::from_millis(1000));
-        //println!("After {:?}     \tat {:?}", instruction, map.my_position.unwrap());
+        //println!("After {:?}     \tat {:?}", instruction,
+        // map.my_position.unwrap());
     }
 
     //map.print();
