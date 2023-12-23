@@ -2,7 +2,7 @@
 This repository contains Thomas Smith's solutions to
 [Advent of Code](https://adventofcode.com/).
 
-Solutions are available for 2022 and 2023.
+Solutions are available for both parts of the 2022 and 2023 problems.
 
 Solutions are written in Rust and use the Rust standard library.
 
