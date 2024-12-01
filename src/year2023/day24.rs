@@ -178,8 +178,8 @@ impl Hailstone {
 }*/
 
 pub fn run<R: io::Read>(
-    part: Part,
-    reader: io::BufReader<R>,
+    _part: Part,
+    _reader: io::BufReader<R>,
 ) -> io::Result<()> {
 /*
     //let test_area = TwoDBox { x: 200000000000000.0..=400000000000000.0, y: 200000000000000.0..=400000000000000.0 };

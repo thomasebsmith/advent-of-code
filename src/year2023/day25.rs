@@ -20,9 +20,9 @@ impl<V, W> UndirectedGraph<V, W> {
         self.vertex_values.len()
     }
 
-    fn vertex_at(&self, index: usize) -> &V {
+    /*fn vertex_at(&self, index: usize) -> &V {
         &self.vertex_values[index]
-    }
+    }*/
 
     fn edge_between(&self, vertex_from: usize, vertex_to: usize) -> Option<&W> {
         self.edges.get(&(min(vertex_from, vertex_to), max(vertex_from, vertex_to)))
@@ -172,7 +172,7 @@ impl Wiring {
 }
 
 pub fn run<R: io::Read>(
-    part: Part,
+    _part: Part,
     reader: io::BufReader<R>,
 ) -> io::Result<()> {
     let mut wiring = Wiring::from_lines(lines(reader)?.collect())?;

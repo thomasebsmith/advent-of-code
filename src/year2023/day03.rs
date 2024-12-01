@@ -9,6 +9,7 @@ use crate::part::Part;
 enum Bit {
     Digit(u64),
     Space,
+    #[allow(dead_code)]
     Symbol(char),
     PotentialGear,
 }

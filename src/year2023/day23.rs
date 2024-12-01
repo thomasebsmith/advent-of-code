@@ -235,8 +235,8 @@ impl HikingTrails {
 }*/
 
 pub fn run<R: io::Read>(
-    part: Part,
-    reader: io::BufReader<R>,
+    _part: Part,
+    _reader: io::BufReader<R>,
 ) -> io::Result<()> {
     //let trails = HikingTrails::from_reader(reader)?;
 
