@@ -88,7 +88,7 @@ impl Hailstone {
     //fn simple_velocity(&self) -> Vector {
         // TODO rename
         //let the_gcd = gcd(self.x, other.x
-        //self.velocity 
+        //self.velocity
     //}
 
     /*fn two_d_path_in_box(&self, the_box: &TwoDBox) -> Path {
@@ -103,7 +103,7 @@ impl Hailstone {
             //None
         //} else {
             //Some(Vector {
-                //x: 
+                //x:
         //}
         let p_this = self.initial_position + self.velocity;
         let p_other = other.initial_position + other.velocity;
@@ -181,7 +181,7 @@ pub fn run<R: io::Read>(
     _part: Part,
     _reader: io::BufReader<R>,
 ) -> io::Result<()> {
-/*
+    /*
     //let test_area = TwoDBox { x: 200000000000000.0..=400000000000000.0, y: 200000000000000.0..=400000000000000.0 };
     let test_area = TwoDBox { x: 200000000000000.into()..=400000000000000.into(), y: 200000000000000.into()..=400000000000000.into() };
     //let test_area = TwoDBox { x: 7.0..=27.0, y: 7.0..=27.0 };

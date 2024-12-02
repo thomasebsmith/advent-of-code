@@ -3,8 +3,8 @@ use std::io;
 use std::io::BufRead;
 
 use crate::errors::invalid_input;
-use crate::part::Part;
 use crate::parse::parse_words;
+use crate::part::Part;
 
 fn part1(left_list: Vec<i64>, right_list: Vec<i64>) -> i64 {
     left_list
@@ -19,7 +19,8 @@ fn part2(left_list: Vec<i64>, right_list: Vec<i64>) -> i64 {
     for item in right_list {
         *frequencies.entry(item).or_insert(0) += 1;
     }
-    left_list.iter()
+    left_list
+        .iter()
         .map(|item| frequencies.get(item).unwrap_or(&0) * item)
         .sum()
 }

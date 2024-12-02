@@ -1,4 +1,4 @@
-use std::cmp::{min, max};
+use std::cmp::{max, min};
 use std::collections::{HashMap, VecDeque};
 use std::io;
 
@@ -13,7 +13,10 @@ struct UndirectedGraph<V, W> {
 
 impl<V, W> UndirectedGraph<V, W> {
     fn new() -> Self {
-        Self { vertex_values: vec![], edges: HashMap::new() }
+        Self {
+            vertex_values: vec![],
+            edges: HashMap::new(),
+        }
     }
 
     fn num_vertices(&self) -> usize {
@@ -25,10 +28,15 @@ impl<V, W> UndirectedGraph<V, W> {
     }*/
 
     fn edge_between(&self, vertex_from: usize, vertex_to: usize) -> Option<&W> {
-        self.edges.get(&(min(vertex_from, vertex_to), max(vertex_from, vertex_to)))
+        self.edges
+            .get(&(min(vertex_from, vertex_to), max(vertex_from, vertex_to)))
     }
 
-    fn edge_exists_between(&self, vertex_from: usize, vertex_to: usize) -> bool {
+    fn edge_exists_between(
+        &self,
+        vertex_from: usize,
+        vertex_to: usize,
+    ) -> bool {
         self.edge_between(vertex_from, vertex_to).is_some()
     }
 
@@ -74,30 +82,47 @@ struct Wiring {
 
 impl Wiring {
     fn from_lines(lines: Vec<String>) -> io::Result<Self> {
-        type UG = UndirectedGraph::<String, ()>;
+        type UG = UndirectedGraph<String, ()>;
         let mut state = UG::new();
         let mut vertex_names = HashMap::<String, usize>::new();
 
-        fn add_vertex_if_dne(state: &mut UG, vertex_names: &mut HashMap<String, usize>, name: &str) -> usize {
+        fn add_vertex_if_dne(
+            state: &mut UG,
+            vertex_names: &mut HashMap<String, usize>,
+            name: &str,
+        ) -> usize {
             let name = name.to_owned();
             let entry = vertex_names.entry(name.clone());
             *entry.or_insert_with(|| state.add_vertex(name))
         }
 
         for line in lines {
-            let [vertex_name, connection_names] = &line.split(": ").collect::<Vec<_>>()[..] else {
-                return Err(invalid_input("Expected <vertex name>: <connections>"));
+            let [vertex_name, connection_names] =
+                &line.split(": ").collect::<Vec<_>>()[..]
+            else {
+                return Err(invalid_input(
+                    "Expected <vertex name>: <connections>",
+                ));
             };
-            let connections = connection_names.split_whitespace().collect::<Vec<_>>();
+            let connections =
+                connection_names.split_whitespace().collect::<Vec<_>>();
 
-            let vertex = add_vertex_if_dne(&mut state, &mut vertex_names, vertex_name);
+            let vertex =
+                add_vertex_if_dne(&mut state, &mut vertex_names, vertex_name);
             for connection in connections {
-                let neighbor = add_vertex_if_dne(&mut state, &mut vertex_names, connection);
+                let neighbor = add_vertex_if_dne(
+                    &mut state,
+                    &mut vertex_names,
+                    connection,
+                );
                 state.add_edge(vertex, neighbor, ());
             }
         }
 
-        Ok(Self { state, vertex_names })
+        Ok(Self {
+            state,
+            vertex_names,
+        })
     }
 
     fn groups(&mut self) -> Vec<usize> {
@@ -121,7 +146,12 @@ impl Wiring {
                 visited[to_visit] = true;
                 current_size += 1;
                 //visit_queue.extend(self.state.neighbors(to_visit));
-                visit_queue.extend(neighbor_cache.entry(to_visit).or_insert_with(|| self.state.neighbors(to_visit)).clone());
+                visit_queue.extend(
+                    neighbor_cache
+                        .entry(to_visit)
+                        .or_insert_with(|| self.state.neighbors(to_visit))
+                        .clone(),
+                );
             }
 
             groups.push(current_size);
@@ -130,7 +160,9 @@ impl Wiring {
         groups
     }
 
-    fn two_group_sizes_after_removing_three(&mut self) -> Option<(usize, usize)> {
+    fn two_group_sizes_after_removing_three(
+        &mut self,
+    ) -> Option<(usize, usize)> {
         /*let mut edges = self.state.edges.keys().map(|key| key.to_owned()).collect::<Vec<(usize, usize)>>();
 
         for i in 2..edges.len() {
