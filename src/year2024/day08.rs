@@ -1,9 +1,8 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 use std::io;
 use std::io::BufRead;
 
 use crate::errors::invalid_input;
-use crate::parse::parse_words;
 use crate::part::Part;
 
 // From https://github.com/rust-num/num-integer/blob/03640c2a9472fad6f40845ab29c7c9502935d1d3/src/lib.rs
