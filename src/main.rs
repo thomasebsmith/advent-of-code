@@ -10,6 +10,7 @@ mod part;
 mod year2022;
 mod year2023;
 mod year2024;
+mod year2025;
 
 use std::env;
 use std::error::Error;
@@ -46,6 +47,7 @@ fn parse_args_and_run() -> Result<(), Box<dyn Error>> {
         2022 => year2022::run,
         2023 => year2023::run,
         2024 => year2024::run,
+        2025 => year2025::run,
         _ => Err(invalid_input("Invalid year"))?,
     };
 
