@@ -256,7 +256,10 @@ pub fn run<R: io::Read>(
                         }
                     }
                 } else {
-                    panic!("Multiple differing components: {num_same} same with {} components (size diff={size_diff})", components.len());
+                    panic!(
+                        "Multiple differing components: {num_same} same with {} components (size diff={size_diff})",
+                        components.len()
+                    );
                 }
             };
             /*

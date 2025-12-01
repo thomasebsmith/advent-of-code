@@ -1,5 +1,5 @@
-use std::collections::linked_list;
 use std::collections::LinkedList;
+use std::collections::linked_list;
 use std::io;
 use std::io::BufRead;
 

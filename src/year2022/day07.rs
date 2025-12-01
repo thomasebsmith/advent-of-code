@@ -17,8 +17,8 @@ enum FSItem {
 impl FSItem {
     fn size(&self) -> usize {
         match self {
-            Self::Directory(ref directory) => directory.size_of_children(),
-            Self::File(ref file) => file.size(),
+            Self::Directory(directory) => directory.size_of_children(),
+            Self::File(file) => file.size(),
         }
     }
 }
@@ -35,7 +35,7 @@ impl<'a> Iterator for FSItemWalker<'a> {
             match self.iters.last_mut() {
                 Some(last_iter) => match last_iter.next() {
                     Some((name, item)) => {
-                        if let FSItem::Directory(ref dir) = item {
+                        if let FSItem::Directory(dir) = item {
                             self.iters.push(dir.children.iter());
                         }
                         return Some((name, item));
@@ -90,7 +90,7 @@ impl Directory {
         };
         match child {
             FSItem::File(_) => Err(invalid_input("Cannot navigate to file")),
-            FSItem::Directory(ref mut dir) => dir.navigate_mut_dir(&path[1..]),
+            FSItem::Directory(dir) => dir.navigate_mut_dir(&path[1..]),
         }
     }
 }

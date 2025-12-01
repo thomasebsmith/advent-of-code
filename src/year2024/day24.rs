@@ -225,13 +225,19 @@ pub fn run<R: io::Read>(
                 };
             if let Some(ref expected_basic_add) = expected_basic_add {
                 if *gate_add_name != *expected_basic_add {
-                    println!("Failed expectation from {} that {expected_basic_add} is the basic add for {z_num}", z_num + 1);
+                    println!(
+                        "Failed expectation from {} that {expected_basic_add} is the basic add for {z_num}",
+                        z_num + 1
+                    );
                     continue;
                 }
             }
             if let Some(ref expected_prev_carry) = expected_prev_carry {
                 if *gate_prev_carry_name != *expected_prev_carry {
-                    println!("Failed expectation from {} that {expected_prev_carry} is the previous carry for {z_num}", z_num + 1);
+                    println!(
+                        "Failed expectation from {} that {expected_prev_carry} is the previous carry for {z_num}",
+                        z_num + 1
+                    );
                     continue;
                 }
             }
@@ -242,7 +248,9 @@ pub fn run<R: io::Read>(
                 continue;
             }
             if gate_prev_carry.gate_type != GateType::Or {
-                println!("Expected GPC {gate_prev_carry_name} to be OR (on bit {z_num})");
+                println!(
+                    "Expected GPC {gate_prev_carry_name} to be OR (on bit {z_num})"
+                );
                 continue;
             }
             if gate_add.input1 != x_name && gate_add.input2 != x_name {
@@ -305,13 +313,17 @@ pub fn run<R: io::Read>(
             if gate_prev_basic_carry.input1 != prev_x_name
                 && gate_prev_basic_carry.input2 != prev_x_name
             {
-                println!("Expected {gate_prev_basic_carry:?} to have {prev_x_name} input");
+                println!(
+                    "Expected {gate_prev_basic_carry:?} to have {prev_x_name} input"
+                );
                 continue;
             }
             if gate_prev_basic_carry.input1 != prev_y_name
                 && gate_prev_basic_carry.input2 != prev_y_name
             {
-                println!("Expected {gate_prev_basic_carry:?} to have {prev_y_name} input");
+                println!(
+                    "Expected {gate_prev_basic_carry:?} to have {prev_y_name} input"
+                );
                 continue;
             }
 

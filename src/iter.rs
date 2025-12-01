@@ -102,11 +102,7 @@ impl<I: Iterator, P: FnMut(&I::Item) -> bool> Iterator for SplitBy<I, P> {
             result.push(item);
         }
 
-        if items_exist {
-            Some(result)
-        } else {
-            None
-        }
+        if items_exist { Some(result) } else { None }
     }
 }
 

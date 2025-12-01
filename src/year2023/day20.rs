@@ -29,8 +29,8 @@ impl ModuleState {
                     };
                     println!("{key} flipped from {was_on} to {is_on}");
                 }
-                Self::Conjunction(ref old_inputs) => {
-                    let Self::Conjunction(ref new_inputs) = new_state else {
+                Self::Conjunction(old_inputs) => {
+                    let Self::Conjunction(new_inputs) = new_state else {
                         panic!("Invalid compare");
                     };
                     // TODO should I print more often here??
@@ -39,7 +39,9 @@ impl ModuleState {
                     let new_is_low =
                         new_inputs.values().all(|v| *v == Pulse::High);
                     if old_was_low != new_is_low {
-                        println!("{key} changed from low={old_was_low} to low={new_is_low}",);
+                        println!(
+                            "{key} changed from low={old_was_low} to low={new_is_low}",
+                        );
                     }
                 }
                 _ => panic!("Unexpected discrepancy"),

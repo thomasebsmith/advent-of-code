@@ -103,10 +103,8 @@ struct CrucibleTileState<
     minimum_heat_loss_to_reach: [i64; PER_TILE_STATE_SIZE],
 }
 
-impl<
-        const MIN_BLOCKS_SINGLE_DIRECTION: usize,
-        const PER_TILE_STATE_SIZE: usize,
-    > std::fmt::Debug
+impl<const MIN_BLOCKS_SINGLE_DIRECTION: usize, const PER_TILE_STATE_SIZE: usize>
+    std::fmt::Debug
     for CrucibleTileState<MIN_BLOCKS_SINGLE_DIRECTION, PER_TILE_STATE_SIZE>
 {
     fn fmt(
@@ -137,10 +135,8 @@ impl<
     }
 }
 
-impl<
-        const MIN_BLOCKS_SINGLE_DIRECTION: usize,
-        const PER_TILE_STATE_SIZE: usize,
-    > CrucibleTileState<MIN_BLOCKS_SINGLE_DIRECTION, PER_TILE_STATE_SIZE>
+impl<const MIN_BLOCKS_SINGLE_DIRECTION: usize, const PER_TILE_STATE_SIZE: usize>
+    CrucibleTileState<MIN_BLOCKS_SINGLE_DIRECTION, PER_TILE_STATE_SIZE>
 {
     fn new() -> Self {
         Self {
@@ -186,10 +182,8 @@ struct CrucibleState<
     >,
 }
 
-impl<
-        const MIN_BLOCKS_SINGLE_DIRECTION: usize,
-        const PER_TILE_STATE_SIZE: usize,
-    > CrucibleState<MIN_BLOCKS_SINGLE_DIRECTION, PER_TILE_STATE_SIZE>
+impl<const MIN_BLOCKS_SINGLE_DIRECTION: usize, const PER_TILE_STATE_SIZE: usize>
+    CrucibleState<MIN_BLOCKS_SINGLE_DIRECTION, PER_TILE_STATE_SIZE>
 {
     fn new(width: usize, height: usize) -> Self {
         let mut map = Vec::<
