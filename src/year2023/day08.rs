@@ -143,7 +143,8 @@ impl<'a, const IS_PART_2: bool> Traverser<'a, IS_PART_2> {
             }
         }
 
-        // We don't cache results that aren't explicitly asked for, because it won't help much and just takes extra memory.
+        // We don't cache results that aren't explicitly asked for, because it
+        // won't help much and just takes extra memory.
         let mut distance: usize = 0;
         let mut location = current_location;
 
