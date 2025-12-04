@@ -3,6 +3,7 @@
 #![feature(iterator_try_collect)]
 #![feature(linked_list_cursors)]
 
+mod cellmap;
 mod errors;
 mod iter;
 mod parse;
