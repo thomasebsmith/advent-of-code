@@ -5,13 +5,16 @@ use std::str::FromStr;
 use crate::errors::invalid_input;
 use crate::iter::split_by;
 
+pub fn lines_vec<R: io::Read>(
+    reader: io::BufReader<R>,
+) -> io::Result<Vec<String>> {
+    reader.lines().collect::<io::Result<Vec<_>>>()
+}
+
 pub fn lines<R: io::Read>(
     reader: io::BufReader<R>,
 ) -> io::Result<impl Iterator<Item = String>> {
-    reader
-        .lines()
-        .collect::<io::Result<Vec<_>>>()
-        .map(Vec::into_iter)
+    lines_vec(reader).map(Vec::into_iter)
 }
 
 pub fn paragraphs<I>(iterator: I) -> impl Iterator<Item = Vec<I::Item>>
