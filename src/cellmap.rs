@@ -1,3 +1,4 @@
+use std::cmp::{max, min};
 use std::io;
 use std::io::BufRead;
 
@@ -5,8 +6,47 @@ use crate::errors::invalid_input;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub struct Position {
-    row: isize,
-    col: isize,
+    pub row: isize,
+    pub col: isize,
+}
+
+impl Position {
+    pub fn straight_line_to(
+        self,
+        other: Position,
+    ) -> Option<(Vec<Position>, Direction)> {
+        if self == other {
+            None
+        } else if self.row == other.row {
+            let min_val = min(self.col, other.col);
+            let max_val = max(self.col, other.col);
+            Some((
+                (min_val..=max_val)
+                    .map(|col| Position { row: self.row, col })
+                    .collect(),
+                if self.col < other.col {
+                    Direction::Right
+                } else {
+                    Direction::Left
+                },
+            ))
+        } else if self.col == other.col {
+            let min_val = min(self.row, other.row);
+            let max_val = max(self.row, other.row);
+            Some((
+                (min_val..=max_val)
+                    .map(|row| Position { row, col: self.col })
+                    .collect(),
+                if self.row < other.row {
+                    Direction::Down
+                } else {
+                    Direction::Up
+                },
+            ))
+        } else {
+            None
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -20,6 +60,45 @@ pub enum Direction {
 impl Direction {
     #[allow(dead_code)]
     pub const ALL: [Self; 4] = [Self::Up, Self::Down, Self::Left, Self::Right];
+
+    pub fn turn_direction(self, other: Self) -> Self {
+        match (self, other) {
+            (Self::Up, Self::Up)
+            | (Self::Down, Self::Down)
+            | (Self::Left, Self::Left)
+            | (Self::Right, Self::Right) => Direction::Up,
+            (Self::Up, Self::Down)
+            | (Self::Down, Self::Up)
+            | (Self::Left, Self::Right)
+            | (Self::Right, Self::Left) => Direction::Down,
+            (Self::Up, Self::Right)
+            | (Self::Down, Self::Left)
+            | (Self::Left, Self::Up)
+            | (Self::Right, Self::Down) => Direction::Right,
+            (Self::Up, Self::Left)
+            | (Self::Down, Self::Right)
+            | (Self::Left, Self::Down)
+            | (Self::Right, Self::Up) => Direction::Left,
+        }
+    }
+
+    pub fn turn_right(self) -> Self {
+        match self {
+            Self::Up => Self::Right,
+            Self::Down => Self::Left,
+            Self::Left => Self::Up,
+            Self::Right => Self::Down,
+        }
+    }
+
+    pub fn turn_left(self) -> Self {
+        match self {
+            Self::Up => Self::Left,
+            Self::Down => Self::Right,
+            Self::Left => Self::Down,
+            Self::Right => Self::Up,
+        }
+    }
 }
 
 impl Position {
@@ -141,6 +220,14 @@ impl<C> CellMap<C> {
 }
 
 impl<C: Copy> CellMap<C> {
+    pub fn filled_with(cell: C, width: usize, height: usize) -> Self {
+        Self {
+            layout: vec![vec![cell; width]; height],
+            width: width as isize,
+            height: height as isize,
+        }
+    }
+
     pub fn at(&self, position: Position) -> Option<C> {
         if !self.in_bounds(position) {
             None
