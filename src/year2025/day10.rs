@@ -1,7 +1,6 @@
 use std::cmp::Reverse;
 use std::io;
 use std::io::BufRead;
-// use std::ops::{AddAssign, Mul};
 
 use crate::errors::invalid_input;
 use crate::parse::parse_all;
@@ -21,24 +20,6 @@ fn xor(vec1: &mut BitSet, vec2: &BitSet) {
         vec1[i] ^= vec2[i];
     }
 }
-
-/*
-fn add<U: Copy, T: AddAssign<U>>(vec1: &mut Vec<T>, vec2: &Vec<U>) {
-    assert_eq!(vec1.len(), vec2.len());
-    for i in 0..vec1.len() {
-        vec1[i] += vec2[i];
-    }
-}
-
-fn any_greater<T: Ord>(vec1: &Vec<T>, vec2: &Vec<T>) -> bool {
-    assert_eq!(vec1.len(), vec2.len());
-    for i in 0..vec1.len() {
-        if vec1[i] > vec2[i] {
-            return true;
-        }
-    }
-    false
-}*/
 
 fn add(arr1: &mut JoltageArray, arr2: &JoltageArray) {
     for i in 0..MAX_NUM_JOLTAGES {
