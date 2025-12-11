@@ -30,10 +30,13 @@ impl ResultsTableKey {
         end: DeviceID,
         passing_through: &HashSet<DeviceID>,
     ) -> Self {
+        let mut passing_through_vec =
+            passing_through.iter().cloned().collect::<Vec<_>>();
+        passing_through_vec.sort();
         Self {
             start,
             end,
-            passing_through: passing_through.iter().cloned().collect(),
+            passing_through: passing_through_vec,
         }
     }
 }
